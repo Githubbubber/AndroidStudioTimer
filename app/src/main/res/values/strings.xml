@@ -4,6 +4,4 @@
     <string name="end_timer_text">End</string>
     <string name="initial_display_time_text">00:00:00</string>
     <string name="end_display_time_text">24:59:59</string>
-    <string name="wtf">WTF</string>
-    <string name="num">0</string>
 </resources>

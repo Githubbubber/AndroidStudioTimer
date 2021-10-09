@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.TextView;
@@ -25,26 +26,46 @@ public class MainActivity extends AppCompatActivity {
     public void onBtnUseTimerClick(View view) {
         TextView txtShowTimer = findViewById(R.id.txtShowTimer);
         Button btnUseTimer = findViewById(R.id.btnUseTimer);
-        TextView allOutputs = findViewById(R.id.allOutputs);
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable(){
-                    @Override
-                    public void run(){
-                        String iClicks = allOutputs.getText().toString();
-                        int x = Integer.valueOf(iClicks);
+        String hourMinSec = getString(R.string.initial_display_time_text);
+        String[] times = hourMinSec.split(":");
 
-                        // task to be done every 1000 milliseconds
-                        iClicks = String.valueOf(x + 1);
-                        allOutputs.setText(iClicks);
-                    }
-                });
-
-            }
-        }, 0, 1000);
+        changeDisplayTimer(view, txtShowTimer, times);
+        changeBtnText(btnUseTimer);
     }
 
+    public void changeDisplayTimer(View view, TextView txtShowTimer, String[] times) {
+//        if (txtShowTimer.getText().toString().equals(hourMinSec) {
+            Timer timer = new Timer();
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable(){
+                        @Override
+                        public void run(){
+                            int hour = Integer.valueOf(times[0]);
+                            int minute = Integer.valueOf(times[1]);
+                            int second = Integer.valueOf(times[2]);
+
+                            FormatTimerValues formatTimerValues = new FormatTimerValues(hour, minute, second);
+                            txtShowTimer.setText(formatTimerValues.getDisplayTimer());
+                        }
+                    });
+                }
+            }, 0, 1000);
+//        } else {
+//            txtShowTimer.setText(hourMinSec);
+//        }
+    }
+
+    public void changeBtnText(Button btnUseTimer) {
+        String startTimerText = getString(R.string.start_timer_text);
+
+        if (btnUseTimer.getText().toString().equals(startTimerText)) {
+            btnUseTimer.setText(R.string.end_timer_text);
+        } else {
+            btnUseTimer.setText(R.string.start_timer_text);
+        }
+    }
 }

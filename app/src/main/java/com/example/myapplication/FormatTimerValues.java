@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
 public class FormatTimerValues {
     private String[] displayWhatItIs = {"", "", ""};
     private int hours;
@@ -46,10 +48,11 @@ public class FormatTimerValues {
     }
 
     public String getDisplayTimer () {
-        this.setSeconds();
-        this.setMinutes();
-        this.setHours();
+        setSeconds();
+        setMinutes();
+        setHours();
 
+        Log.d("Seeing: ", this.displayWhatItIs[0] + ":" + this.displayWhatItIs[1] + ":" + this.displayWhatItIs[2]);
         return this.displayWhatItIs[0] + ":" + this.displayWhatItIs[1] + ":" + this.displayWhatItIs[2];
     }
 }
