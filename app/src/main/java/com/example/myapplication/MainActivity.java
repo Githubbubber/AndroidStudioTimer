@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+    public int seconds = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,46 +29,34 @@ public class MainActivity extends AppCompatActivity {
     public void onBtnUseTimerClick(View view) {
         TextView txtShowTimer = findViewById(R.id.txtShowTimer);
         Button btnUseTimer = findViewById(R.id.btnUseTimer);
+        String btnStartTimer = getString(R.string.btn_start_timer);
+        Timer timer = new Timer();
 
-        String hourMinSec = getString(R.string.initial_display_time_text);
-        String[] times = hourMinSec.split(":");
-
-        changeDisplayTimer(view, txtShowTimer, times);
-        changeBtnText(btnUseTimer);
-    }
-
-    public void changeDisplayTimer(View view, TextView txtShowTimer, String[] times) {
-//        if (txtShowTimer.getText().toString().equals(hourMinSec) {
-            Timer timer = new Timer();
+        if (btnUseTimer.getText().toString().equals(btnStartTimer)) {
+            btnUseTimer.setText(R.string.btn_end_timer);
 
             timer.schedule(new TimerTask() {
-                @Override
                 public void run() {
-                    runOnUiThread(new Runnable(){
-                        @Override
-                        public void run(){
-                            int hour = Integer.valueOf(times[0]);
-                            int minute = Integer.valueOf(times[1]);
-                            int second = Integer.valueOf(times[2]);
+                    seconds++;
 
-                            FormatTimerValues formatTimerValues = new FormatTimerValues(hour, minute, second);
-                            txtShowTimer.setText(formatTimerValues.getDisplayTimer());
-                        }
-                    });
+                    FormatTimerValues formatTimerValues = new FormatTimerValues(seconds);
+                    String answer = formatTimerValues.getDisplayTimer();
+
+                    txtShowTimer.setText(answer);
+
+                    if (answer == getString(R.string.endpoint_display_time)) {
+                        cancel();
+                        timer.cancel();
+                        timer.purge();
+                        btnUseTimer.setText(R.string.btn_start_timer);
+                    }
                 }
             }, 0, 1000);
-//        } else {
-//            txtShowTimer.setText(hourMinSec);
-//        }
-    }
-
-    public void changeBtnText(Button btnUseTimer) {
-        String startTimerText = getString(R.string.start_timer_text);
-
-        if (btnUseTimer.getText().toString().equals(startTimerText)) {
-            btnUseTimer.setText(R.string.end_timer_text);
         } else {
-            btnUseTimer.setText(R.string.start_timer_text);
+            timer.cancel();
+            timer.purge();
+            txtShowTimer.setText(R.string.text_zero_display_time);
+            btnUseTimer.setText(R.string.btn_start_timer);
         }
     }
 }

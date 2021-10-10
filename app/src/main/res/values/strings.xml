@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyApplication</string>
-    <string name="start_timer_text">Start</string>
-    <string name="end_timer_text">End</string>
-    <string name="initial_display_time_text">00:00:00</string>
-    <string name="end_display_time_text">24:59:59</string>
+    <string name="btn_start_timer">Start</string>
+    <string name="btn_end_timer">End</string>
+    <string name="text_zero_display_time">00:00:00</string>
+    <string name="endpoint_display_time">24:00:00</string>
 </resources>

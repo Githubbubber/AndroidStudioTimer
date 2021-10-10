@@ -3,47 +3,61 @@ package com.example.myapplication;
 import android.util.Log;
 
 public class FormatTimerValues {
-    private String[] displayWhatItIs = {"", "", ""};
-    private int hours;
-    private int minutes;
-    private int seconds;
+    private final String[] displayWhatItIs = {"", "", ""};
+    private int hours = 0;
+    private int minutes = 0;
+    private int secondsToDisplay = 0;
+    private final int seconds;
 
-    public FormatTimerValues(int hours, int minutes, int seconds) {
-        this.hours = hours;
-        this.minutes = minutes;
+    public FormatTimerValues(int seconds) {
         this.seconds = seconds;
     }
 
+    public void retrieveSeconds() {
+        if (seconds < 60) {
+            secondsToDisplay = seconds;
+            return;
+        }
+
+        if (seconds > 86399) {
+            hours = 24;
+            return;
+        }
+
+        hours = seconds / 3600;
+        minutes = (seconds % 3600) / 60;
+        secondsToDisplay = ((seconds % 3600) % 60) > 59 ? 0 : (seconds % 3600) % 60;
+    }
+
     private void setSeconds () {
-        this.seconds++;
-        if (this.seconds <= 9) {
-            this.displayWhatItIs[2] = "0" + (this.seconds);
-        } else if (this.seconds > 9 && this.seconds < 60) {
-            this.displayWhatItIs[2] = "" + this.seconds;
+        retrieveSeconds();
+
+        if (secondsToDisplay <= 9) {
+            displayWhatItIs[2] = "0" + (secondsToDisplay);
+        } else if (secondsToDisplay < 60) {
+            displayWhatItIs[2] = "" + secondsToDisplay;
         } else {
-            this.displayWhatItIs[2] = "00";
-            this.minutes++;
+            displayWhatItIs[2] = "00";
         }
     }
 
     private void setMinutes () {
-        if (this.minutes <= 9) {
-            this.displayWhatItIs[1] = "0" + (this.minutes);
-        } else if (this.minutes > 9 && this.minutes < 60) {
-            this.displayWhatItIs[1] = "" + this.minutes;
+        if (minutes <= 9) {
+            displayWhatItIs[1] = "0" + (minutes);
+        } else if (minutes < 60) {
+            displayWhatItIs[1] = "" + minutes;
         } else {
-            this.displayWhatItIs[1] = "00";
-            this.hours++;
+            displayWhatItIs[1] = "00";
         }
     }
 
     private void setHours () {
-        if (this.hours <= 9) {
-            this.displayWhatItIs[0] = "0" + (this.hours);
-        } else if (this.hours > 9 && this.hours < 24) {
-            this.displayWhatItIs[0] = "" + this.hours;
+        if (hours <= 9) {
+            displayWhatItIs[0] = "0" + (hours);
+        } else if (hours < 24) {
+            displayWhatItIs[0] = "" + hours;
         } else {
-            this.displayWhatItIs[0] = "" + 24;
+            displayWhatItIs[0] = "" + 24;
         }
     }
 
@@ -52,7 +66,6 @@ public class FormatTimerValues {
         setMinutes();
         setHours();
 
-        Log.d("Seeing: ", this.displayWhatItIs[0] + ":" + this.displayWhatItIs[1] + ":" + this.displayWhatItIs[2]);
-        return this.displayWhatItIs[0] + ":" + this.displayWhatItIs[1] + ":" + this.displayWhatItIs[2];
+        return displayWhatItIs[0] + ":" + displayWhatItIs[1] + ":" + displayWhatItIs[2];
     }
 }
