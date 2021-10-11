@@ -16,8 +16,14 @@ I was wondering if using finalize() in MainActivity helps with freeing up memory
 -----
 
 #### TODOs 
-- Cast to nearby devices/screens
+- Cast and Airplay to nearby devices/screens
 - A single account designated as a time keeper will control the timer while remote users can see the time. This is for remote recordings. 
 - Tracks recording times and shows trends over time.
 - Take notes in the app
 - Countdown feature (single and multiple chained countdowns)
+- Set Multiple Timers in a playlist style
+- Set Timer warnings: Able to display a five and then a two minute warning where the display will flash a distinct color
+- Able set a wrap-up message at the end of the timer
+- When setting multiple timers see a total count of how long it is combined
+- Able to name is each timer
+- Able to save timer playlist
