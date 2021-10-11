@@ -1,14 +1,20 @@
 package com.example.myapplication;
 
-import android.util.Log;
-
+/**
+ * Handles each of the hour:minutes:seconds sections
+ */
 public class FormatTimerValues {
-    private final String[] displayWhatItIs = {"", "", ""};
+    private final String[] formedTimerDisplay = {"", "", ""};
     private int hours = 0;
     private int minutes = 0;
     private int secondsToDisplay = 0;
     private final int seconds;
 
+    /**
+     * Handles each of the hour:minutes:seconds sections
+     *
+     * @param  seconds  the incremented second to calculate the time from
+     */
     public FormatTimerValues(int seconds) {
         this.seconds = seconds;
     }
@@ -33,31 +39,31 @@ public class FormatTimerValues {
         retrieveSeconds();
 
         if (secondsToDisplay <= 9) {
-            displayWhatItIs[2] = "0" + (secondsToDisplay);
+            formedTimerDisplay[2] = "0" + (secondsToDisplay);
         } else if (secondsToDisplay < 60) {
-            displayWhatItIs[2] = "" + secondsToDisplay;
+            formedTimerDisplay[2] = "" + secondsToDisplay;
         } else {
-            displayWhatItIs[2] = "00";
+            formedTimerDisplay[2] = "00";
         }
     }
 
     private void setMinutes () {
         if (minutes <= 9) {
-            displayWhatItIs[1] = "0" + (minutes);
+            formedTimerDisplay[1] = "0" + (minutes);
         } else if (minutes < 60) {
-            displayWhatItIs[1] = "" + minutes;
+            formedTimerDisplay[1] = "" + minutes;
         } else {
-            displayWhatItIs[1] = "00";
+            formedTimerDisplay[1] = "00";
         }
     }
 
     private void setHours () {
         if (hours <= 9) {
-            displayWhatItIs[0] = "0" + (hours);
+            formedTimerDisplay[0] = "0" + (hours);
         } else if (hours < 24) {
-            displayWhatItIs[0] = "" + hours;
+            formedTimerDisplay[0] = "" + hours;
         } else {
-            displayWhatItIs[0] = "" + 24;
+            formedTimerDisplay[0] = "" + 24;
         }
     }
 
@@ -66,6 +72,6 @@ public class FormatTimerValues {
         setMinutes();
         setHours();
 
-        return displayWhatItIs[0] + ":" + displayWhatItIs[1] + ":" + displayWhatItIs[2];
+        return formedTimerDisplay[0] + ":" + formedTimerDisplay[1] + ":" + formedTimerDisplay[2];
     }
 }
