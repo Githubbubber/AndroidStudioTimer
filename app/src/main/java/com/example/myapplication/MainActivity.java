@@ -18,7 +18,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-    public int seconds = 0;
+    Timer timer = new Timer();
+    boolean startTimer = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,31 +31,18 @@ public class MainActivity extends AppCompatActivity {
         TextView txtShowTimer = findViewById(R.id.txtShowTimer);
         Button btnUseTimer = findViewById(R.id.btnUseTimer);
         String btnStartTimer = getString(R.string.btn_start_timer);
-        Timer timer = new Timer();
 
-        if (btnUseTimer.getText().toString().equals(btnStartTimer)) {
+        if (btnUseTimer.getText().toString().equals(btnStartTimer) && startTimer == true) {
+            TimeIncrementer timeIncrementer = new TimeIncrementer(0, txtShowTimer, btnUseTimer);
+
             btnUseTimer.setText(R.string.btn_end_timer);
 
-            timer.schedule(new TimerTask() {
-                public void run() {
-                    seconds++;
-
-                    FormatTimerValues formatTimerValues = new FormatTimerValues(seconds);
-                    String answer = formatTimerValues.getDisplayTimer();
-
-                    txtShowTimer.setText(answer);
-
-                    if (answer == getString(R.string.endpoint_display_time)) {
-                        cancel();
-                        timer.cancel();
-                        timer.purge();
-                        btnUseTimer.setText(R.string.btn_start_timer);
-                    }
-                }
-            }, 0, 1000);
+            timer.schedule(timeIncrementer, 0, 1000);
+            startTimer = false;
         } else {
             timer.cancel();
             timer.purge();
+            startTimer = true;
             txtShowTimer.setText(R.string.text_zero_display_time);
             btnUseTimer.setText(R.string.btn_start_timer);
         }
