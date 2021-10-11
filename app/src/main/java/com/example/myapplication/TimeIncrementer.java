@@ -2,14 +2,16 @@ package com.example.myapplication;
 
 import android.widget.Button;
 import android.widget.TextView;
-import android.view.View;
+import android.content.res.Resources;
 
-public class TimeIncrementer implements Runnable{
+import java.util.TimerTask;
+
+public class TimeIncrementer extends TimerTask{
     private int seconds;
     private TextView txtShowTimer;
     private Button btnUseTimer;
 
-    public TimeIncrementer(View view, int seconds, TextView txtShowTimer, Button btnUseTimer) {
+    public TimeIncrementer(int seconds, TextView txtShowTimer, Button btnUseTimer) {
         this.seconds = seconds;
         this.txtShowTimer = txtShowTimer;
         this.btnUseTimer = btnUseTimer;
@@ -17,14 +19,17 @@ public class TimeIncrementer implements Runnable{
 
     @Override
     public void run() {
-        seconds++;
+        String endpointTime = Resources.getSystem().getString(R.string.endpoint_display_time);
 
-        FormatTimerValues formatTimerValues = new FormatTimerValues(seconds);
-        String answer = formatTimerValues.getDisplayTimer();
+        if  (txtShowTimer.getText() != endpointTime) {
+            seconds++;
 
-        txtShowTimer.setText(answer);
+            FormatTimerValues formatTimerValues = new FormatTimerValues(seconds);
+            String displayTimer = formatTimerValues.getDisplayTimer();
 
-        if (answer == getString(R.string.endpoint_display_time)) {
+            txtShowTimer.setText(displayTimer);
+        } else {
+            txtShowTimer.setText(R.string.text_zero_display_time);
             btnUseTimer.setText(R.string.btn_start_timer);
         }
     }
