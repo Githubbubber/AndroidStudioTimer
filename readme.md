@@ -3,6 +3,8 @@ A Java timer to use in a studio during a recording. The timer will eventually be
 
 It will have a simple layout with easy to understand directions. This version is a work in progress.
 
+The meat and potatoes of the app code can be [found here: MainActivity, FormatTimerValues, and TimeIncrementer classes.](https://github.com/Githubbubber/AndroidStudioTimer/tree/main/app/src/main/java/com/example/myapplication) 
+
 #### Help Needed
 Currently the Start/End button is used to toggle the Timer thread but I'm having difficulty starting up a new thread once the first thread is canceled/purged in MainActivity.java.
 ![](https://raw.githubusercontent.com/Githubbubber/AndroidStudioTimer/main/timer_thread.JPG)
