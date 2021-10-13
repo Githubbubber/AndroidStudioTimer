@@ -13,7 +13,7 @@ Currently the Start/End button is used to toggle the Timer thread but I'm having
 
 I was wondering if using finalize() in MainActivity helps with freeing up memory from the finished processes of Timer.
 
-Video of issue [needs to be downloaded](https://github.com/Githubbubber/AndroidStudioTimer/blob/main/original_error.mp4)
+Video of issue [needs to be downloaded](https://github.com/Githubbubber/AndroidStudioTimer/blob/main/pixel5_original_error.mp4)
 
 -----
 
